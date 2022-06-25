@@ -35,6 +35,7 @@ App.listen(process.env.PORT || port,(err)=>{
 
 //USER ROUTES
 
+// App.route("/getusers")
 App.route("/api/getusers")
 .get((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
@@ -45,6 +46,7 @@ users.find({},{_id:0,username:1})
 })
 });
 
+// App.route("/signup")
 App.route("/api/signup")
 .post((req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
@@ -61,6 +63,7 @@ user.save();
     res.send("Hello")
 })
 
+// App.route("/login")
 App.route("/api/login")
 .post((req,res)=>{
     res.header("Access-Control-Allow-Origin","*");
