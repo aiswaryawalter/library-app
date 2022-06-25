@@ -1,6 +1,7 @@
 var express = require("express");
 var mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const bodyParser = require('body-parser');
 const users = require("./src/models/usersModel");
 const books = require("./src/models/booksModel");
 const path = require('path');
@@ -9,6 +10,7 @@ const App =express();
 
 //Express Middlewares
 App.use(express.json());
+App.use(bodyParser.json());
 App.use(express.urlencoded({extended:true}));
 App.use(cors());
 App.use(express.static('./dist/library-app'));
