@@ -32,6 +32,27 @@ App.listen(process.env.PORT || port,(err)=>{
     else{console.log("Connected to server")}
 });
 
+function verifyToken(req,res,next){
+    if(!req.headers.authorization)
+    {
+        return res.status(401).send("UnAuthorized Request")
+
+    }
+    let token = req.headers.authorization.split(' ')[1];
+    if(token === "null")
+    {
+        return res.status(401).send("UnAuthorized Request")
+    }
+    let payload = jwt.verify(token,"secretkey")
+    if(!payload)
+    {   
+        return res.status(401).send("UnAuthorized Request");
+        
+    }
+    req.userId = payload.subject;
+    console.log(req.userId);
+    next();
+}
 
 //USER ROUTES
 
@@ -91,7 +112,7 @@ App.route("/api/login")
 
 //get all the books
 App.route("/api/getbooks")
-.get((req,res)=>{
+.get(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  books.find({},(err,books)=>{
@@ -107,7 +128,7 @@ App.route("/api/getbooks")
 
 //get a book
 App.route("/api/getbook/:id")
-.get((req,res)=>{
+.get(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  let bookid = req.params.id;
@@ -125,7 +146,7 @@ App.route("/api/getbook/:id")
 
 //add a book
 App.route("/api/addbook")
-.post((req,res)=>{
+.post(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
 var newBook = {
@@ -145,7 +166,7 @@ book.save((err,data)=>{
 
 //update a book
 App.route("/api/updatebook")
-.put((req,res)=>{
+.put(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  var bookid = req.body.bookid;
@@ -165,7 +186,7 @@ res.send(data);
 
 //deletebook
 App.route("/api/deletebook/:id")
-.delete((req,res)=>{
+.delete(verifyToken, (req,res)=>{
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
  let bookid = req.params.id;
@@ -180,6 +201,7 @@ App.route("/api/deletebook/:id")
 
  })
 });
+
 App.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname + '/dist/library-app/index.html'));
 });

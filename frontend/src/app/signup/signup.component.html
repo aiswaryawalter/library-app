@@ -1,6 +1,6 @@
 <form class="container" (ngSubmit)="addUser()" #signup="ngForm">
   <div class="col-md-6">
-    <label for="inputEmail4" class="form-label">Name</label>
+    <label for="inputEmail4" class="form-label">Username</label>
     <input type="text" name="username" [(ngModel)]="user.username" #name="ngModel"  required class="form-control" name="name"   [class.is-invalid]="name.invalid && name.touched" [class.is-valid]="name.valid" class="form-control" id="inputEmail4">
   </div>
   <div class="col-6">

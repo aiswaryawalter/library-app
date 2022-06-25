@@ -11,19 +11,19 @@ export class UserService {
   server_address: string = 'api';
   
   getusers(){
-    return this.http.get("http://localhost:3000/getusers");
+    return this.http.get(`${this.server_address}/getusers`);
   }
 
   userSignup(user:any){
     console.log(user)
-    return this.http.post("http://localhost:3000/signup",{"user":user})
+    return this.http.post(`${this.server_address}/signup`,{"user":user})
     .subscribe(()=>{
       console.log("Success")
     })
   }
 
   userLogin(user:any){
-    return this.http.post<any>("http://localhost:3000/login",{"user":user});
+    return this.http.post<any>(`${this.server_address}/login`,{"user":user});
   }
 
   loggedIn(){
