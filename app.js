@@ -69,7 +69,6 @@ App.route("/api/book/:id")
 //add a book
 App.route("/api/addbook")
 .post((req,res)=>{
- console.log("🚀 ~ file: app.js ~ line 72 ~ .post ~ res", res)
  res.header("Access-Control-Allow-Origin","*");
  res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH");
 var newBook = {
