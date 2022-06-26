@@ -34,6 +34,7 @@ App.listen(process.env.PORT || port,(err)=>{
 });
 
 function verifyToken(req,res,next){
+    console.log("🚀 ~ file: app.js ~ line 38 ~ verifyToken ~ req.headers.authorization", req.headers.authorization)
     if(!req.headers.authorization)
     {
         return res.status(401).send("UnAuthorized Request")
@@ -45,6 +46,7 @@ function verifyToken(req,res,next){
         return res.status(401).send("UnAuthorized Request")
     }
     let payload = jwt.verify(token,"secretkey")
+    console.log("🚀 ~ file: app.js ~ line 49 ~ verifyToken ~ payload", payload)
     if(!payload)
     {   
         return res.status(401).send("UnAuthorized Request");
@@ -99,7 +101,9 @@ App.route("/api/login")
         {
             let payload = {subject:name+password};
             let token = jwt.sign(payload,"secretkey");
-            console.log(token);
+            console.log("🚀 ~ file: app.js ~ line 104 ~ users.findOne ~ token", token)
+            console.log("🚀 ~ file: app.js ~ line 104 ~ users.findOne ~ payload", payload)
+            // console.log(token);
             res.status(200).send({token});
         }
         else
